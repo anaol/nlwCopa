@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,57 +11,53 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Pool {
-  createdAt DateTime @default(now())
-  code      String   @unique
-  id        String   @id @default(cuid())
-  ownerId String?
-  title     String
-
-  owner User? @relation(fields: [ownerId], references: [id])
+model Poll {
+  id           String        @id @default(cuid())
+  ownerId      String?
+  title        String
+  code         String        @unique
+  createdAt    DateTime      @default(now())
   participants Participant[]
+  owner        User?         @relation(fields: [ownerId], references: [id])
 }
 
 model Participant {
-  id        String   @id @default(cuid())
-  poolId String
+  id     String @id @default(cuid())
   userId String
-
+  pollId String
   guesses Guess[]
-  pool Pool @relation(fields: [poolId], references: [id])
-  user User @relation(fields: [userId], references: [id])
-
-  @@unique([userId, poolId])
+  user    User    @relation(fields: [userId], references: [id])
+  poll    Poll    @relation(fields: [pollId], references: [id])
+  @@unique([userId, pollId])
 }
 
 model User {
-  avatarUrl String?
-  createdAt DateTime @default(now())
-  email String @unique
-  id        String   @id @default(cuid())
-  name String
-
+  id String @id @default(cuid())
+  name            String
+  email           String
+  avatarUrl       String?       @unique
+  googleId        String?       @unique
+  createdAt       DateTime      @default(now())
   participatingAt Participant[]
-  ownPools Pool[]
+  ownPolls        Poll[]
 }
 
 model Game {
-  date DateTime
-  firstTeamCountryCode String
-  id        String   @id @default(cuid())
+  id                    String   @id @default(cuid())
+  date                  DateTime
+  firstTeamCountryCode  String
   secondTeamCountryCode String
-
-  guesses Guess[]
+  guesses               Guess[]
 }
 
 model Guess {
-  createdAt DateTime @default(now())
-  firstTeamPoints Int
-  id        String   @id @default(cuid())
-  gameId String
-  participantId String
-  secondTeamPoints Int
-
-  partipant Participant @relation(fields: [participantId], references: [id])
-  game Game @relation(fields: [gameId], references: [id])
+  id              String   @id @default(cuid())
+  firstTeamPoint  Int
+  secondTeamPoint Int
+  createdAt       DateTime @default(now())
+  gameId          String
+  participantId   String
+  game        Game        @relation(fields: [gameId], references: [id])
+  participant Participant @relation(fields: [participantId], references: [id])
+  @@unique([participantId, gameId])
 }

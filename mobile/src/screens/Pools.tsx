@@ -4,7 +4,7 @@ import { Octicons } from "@expo/vector-icons";
 import { Button } from "../components/Button";
 import { Header } from "../components/Header";
 
-export function Pools() {
+export function Polls() {
     return (
         <VStack bgColor="gray.900" flex={1}>
             <VStack

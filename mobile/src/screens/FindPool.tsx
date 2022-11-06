@@ -4,7 +4,7 @@ import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { Header } from "../components/Header";
 
-export function FindPool() {
+export function FindPoll() {
     return (
         <VStack bgColor="gray.900" flex={1}>
             <Header showBackButton title="Buscar por código" />

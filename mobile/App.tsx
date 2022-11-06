@@ -7,7 +7,7 @@ import {
     Roboto_700Bold,
 } from "@expo-google-fonts/roboto";
 
-import { NewPool } from "./src/screens/NewPool";
+import { NewPoll } from "./src/screens/NewPoll";
 import { Loading } from "./src/components/Loading";
 
 import { THEME } from "./src/styles/theme";
@@ -29,7 +29,7 @@ export default function App() {
                     translucent
                 />
 
-                {fontsLoaded ? <Loading /> : <NewPool />}
+                {fontsLoaded ? <Loading /> : <NewPoll />}
             </AuthContexProvider>
         </NativeBaseProvider>
     );
